@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Shop App",
+    "slug": "shop-app",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "description": "A basic shopping app demonstrating react native features such as navigation, user authentication and state management.\n",
+    "githubUrl": "https://github.com/odanga94/shop-app"
+  }
+}

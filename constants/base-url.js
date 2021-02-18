@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://meals-app-58cf3.firebaseio.com/';
