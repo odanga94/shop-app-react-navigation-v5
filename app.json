@@ -25,6 +25,9 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "useNextNotificationsApi": true
+    },
     "description": "A basic shopping app demonstrating react native features such as navigation, user authentication and state management.\n",
     "githubUrl": "https://github.com/odanga94/shop-app"
   }

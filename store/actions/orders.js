@@ -1,3 +1,4 @@
+import { exp } from 'react-native/Libraries/Animated/src/Easing';
 import { BASE_URL } from '../../constants/base-url';
 import Order from '../../models/order';
 
@@ -68,5 +69,26 @@ export const addOrder = (cartItems, totalAmount) => {
                 date
             }
         });
+
+        cartItems.forEach((cartItem, index) => {
+            const ownerPushToken = cartItem.ownerPushToken;
+            console.log(ownerPushToken);
+
+            fetch('https://exp.host/--/api/v2/push/send', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Accept-Encoding': 'gzip, deflate',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    to: ownerPushToken,
+                    title: 'Order was placed!',
+                    body: cartItem.productTitle
+                })
+            }).catch(err => {
+                console.log(err)
+            });
+        })
     }
 }

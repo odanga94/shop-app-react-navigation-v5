@@ -17,7 +17,7 @@ const CartScreen = props => {
         for (const key in state.cart.items) {
             transformedCartItems.push({
                 productId: key,
-                ...state.cart.items[key]
+                ...state.cart.items[key],
             })
         }
         //console.log(transformedCartItems);

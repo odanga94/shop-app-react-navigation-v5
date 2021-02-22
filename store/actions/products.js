@@ -1,3 +1,6 @@
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
+
 import { BASE_URL } from '../../constants/base-url';
 import Product from '../../models/product';
 
@@ -25,7 +28,8 @@ export const fetchProducts = () => {
                     resData[key].title,
                     resData[key].imageUrl,
                     resData[key].description,
-                    resData[key].price
+                    resData[key].price,
+                    resData[key].ownerPushToken
                 );
             }) : [];
             //console.log(loadedProducts);
@@ -62,6 +66,18 @@ export const deleteProduct = (productId) => {
 export const createProduct = (title, description, imageUrl, price) => {
     return async (dispatch, getState) => {
         // any async code you want!
+        let pushToken
+        const statusObj = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        if (statusObj.status !== 'granted') {
+            const updatedStatusObj = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            if (updatedStatusObj.status !== 'granted'){
+                pushToken = null;
+            } else {
+                pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+            }
+        } else {
+            pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+        }
         const { token, userId } = getState().auth;
         const response = await fetch(`${BASE_URL}products.json/?auth=${token}`, {
             method: 'POST',
@@ -73,7 +89,8 @@ export const createProduct = (title, description, imageUrl, price) => {
                 description,
                 imageUrl,
                 price,
-                ownerId: userId
+                ownerId: userId,
+                ownerPushToken: pushToken
             })
         });
 
@@ -88,7 +105,8 @@ export const createProduct = (title, description, imageUrl, price) => {
                 description,
                 imageUrl,
                 price,
-                ownerId: userId
+                ownerId: userId,
+                ownerPushToken: pushToken
             }
         });
     }
